@@ -59,26 +59,4 @@ public class Test8 {
 
         System.out.println("Test case passed successfully");
     }
-
-//    public void changeLocation() throws InterruptedException {
-//        // change location to UK as item available only in UK
-//        WebElement locationButton = driver.findElement(By.id("glow-ingress-block"));
-//        locationButton.click();
-//
-//        // select location dropdown
-//        WebElement locationsDropdown = driver.findElement(By.xpath("//div[@class=' a-declarative']/span[@class='a-dropdown-container']"));
-//        locationsDropdown.click();
-//
-//        // select UK
-//        WebElement UKOption = driver.findElement(By.xpath("//select[@id='GLUXCountryList']/optgroup[1]/option[@value='GB']"));
-//        UKOption.click();
-//
-//        // click done
-//        driver.findElement(By.xpath("//button[@name='glowDoneButton']")).click();
-//
-//        // wait for location change
-//        Thread.sleep(3000);
-//    }
-
-
 }

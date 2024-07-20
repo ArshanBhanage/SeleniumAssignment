@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="AmazonSuite" parallel="classes">
+    <test thread-count="5" name="Amazon">
+        <classes>
+            <class name="com.Amazon.Test1" />
+            <class name="com.Amazon.Test2" />
+            <class name="com.Amazon.Test3" />
+            <class name="com.Amazon.Test4" />
+            <class name="com.Amazon.Test5" />
+            <class name="com.Amazon.Test6" />
+            <class name="com.Amazon.Test7" />
+            <class name="com.Amazon.Test8" />
+            <class name="com.Amazon.Test9" />
+            <class name="com.Amazon.Test10" />
+        </classes>
+    </test>
+</suite>

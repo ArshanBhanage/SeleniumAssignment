@@ -1,62 +1,27 @@
 package com.Amazon;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.time.Duration;
 import java.util.List;
 
 public class Test6 {
 
     static WebDriver driver;
-    static String browser = "firefox";
+    static String browser = "chrome";
 
     @Test
     public void numberOfCheckBoxesInBrands(){
 
-        if (browser.equalsIgnoreCase("Chrome")) {
-            driver = new ChromeDriver();
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            driver = new FirefoxDriver();
-        } else if (browser.equalsIgnoreCase("edge")) {
-            driver = new EdgeDriver();
-        }
+        driver = CommonUtils.setBrowser(browser, driver);
 
         SoftAssert softAssert = new SoftAssert();
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://amazon.com");
-        driver.manage().window().maximize();
+        CommonUtils.refreshCaptcha(driver);
 
-        try {
-            if (driver.findElement(By.xpath("//*[text()='Enter the characters you see below']")).isDisplayed()){
-                driver.navigate().refresh();
-            }
-        } catch (NoSuchElementException e) {
-            System.out.println("Element not found");
-        }
-
-        try {
-            if (driver.findElement(By.xpath("//*[text()='Enter the characters you see below']")).isDisplayed()){
-                driver.navigate().refresh();
-            }
-        } catch (NoSuchElementException e) {
-            System.out.println("Element not found");
-        }
-
-        try{
-            WebElement toasterRemove = driver.findElement(By.xpath("//div[@class='a-section glow-toaster glow-toaster-theme-default glow-toaster-slot-default nav-coreFlyout nav-flyout']//input[@data-action-type='DISMISS']"));
-            toasterRemove.click();
-        }catch (Exception e){
-            System.out.println("Pop up not found..directly clicking today's deal");
-        }
+        CommonUtils.removeToaster(driver);
 
         // today's deal button
         WebElement todaysDeal = driver.findElement(By.xpath("//div[@id='nav-xshop']//a[1]"));

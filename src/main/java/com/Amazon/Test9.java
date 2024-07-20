@@ -1,16 +1,10 @@
 package com.Amazon;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.time.Duration;
 
 public class Test9 {
     static WebDriver driver;
@@ -19,37 +13,16 @@ public class Test9 {
     @Test
     public void addToCartInBrands() throws InterruptedException {
 
-        if (browser.equalsIgnoreCase("Chrome")){
-            driver = new ChromeDriver();
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            driver = new FirefoxDriver();
-        } else if (browser.equalsIgnoreCase("edge")) {
-            driver = new EdgeDriver();
-        }
+        driver = CommonUtils.setBrowser(browser, driver);
 
         SoftAssert softAssert = new SoftAssert();
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://amazon.com");
-        driver.manage().window().maximize();
+        CommonUtils.refreshCaptcha(driver);
 
-        try {
-            if (driver.findElement(By.xpath("//*[text()='Enter the characters you see below']")).isDisplayed()){
-                driver.navigate().refresh();
-            }
-        } catch (NoSuchElementException e) {
-            System.out.println("Element not found");
-        }
-
-        try{
-            WebElement toasterRemove = driver.findElement(By.xpath("//div[@class='a-section glow-toaster glow-toaster-theme-default glow-toaster-slot-default nav-coreFlyout nav-flyout']//input[@data-action-type='DISMISS']"));
-            toasterRemove.click();
-        }catch (Exception e){
-            System.out.println("Pop up not found..directly clicking today's deal");
-        }
+        CommonUtils.removeToaster(driver);
 
         // change location
-        changeLocation();
+        CommonUtils.changeLocation(driver);
 
         // today's deal button
         WebElement todaysDeal = driver.findElement(By.xpath("//div[@id='nav-xshop']//a[1]"));
@@ -85,26 +58,6 @@ public class Test9 {
         softAssert.assertAll();
 
         System.out.println("Test case passed successfully");
-    }
-
-    public void changeLocation() throws InterruptedException {
-        // change location to UK as item available only in UK
-        WebElement locationButton = driver.findElement(By.id("glow-ingress-block"));
-        locationButton.click();
-
-        // select location dropdown
-        WebElement locationsDropdown = driver.findElement(By.xpath("//div[@class=' a-declarative']/span[@class='a-dropdown-container']"));
-        locationsDropdown.click();
-
-        // select UK
-        WebElement UKOption = driver.findElement(By.xpath("//select[@id='GLUXCountryList']/optgroup[1]/option[@value='GB']"));
-        UKOption.click();
-
-        // click done
-        driver.findElement(By.xpath("//button[@name='glowDoneButton']")).click();
-
-        // wait for location change
-        Thread.sleep(3000);
     }
 
 }
